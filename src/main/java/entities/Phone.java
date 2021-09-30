@@ -27,7 +27,7 @@ public class Phone implements Serializable {
     private int Number;
     private String description;
     
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Person person;
 
     public Phone() {

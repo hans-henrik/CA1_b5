@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,22 +27,49 @@ public class Hobby implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String description;
+    
+    private String wikiLink;
+    private String category;
+    private String type;
     
     @ManyToMany
-    @JoinColumn(name = "hobby")
+    @JoinColumn(name = "hobbies")
     private List<Person> persons;
 
     public Hobby() {
     }
 
-    public Hobby(String name, String description, List<Person> persons) {
+    public Hobby(String name, String wikiLink, String category, String type) {
         this.name = name;
-        this.description = description;
-        this.persons = persons;
+        this.wikiLink = wikiLink;
+        this.category = category;
+        this.type = type;
+        this.persons = new ArrayList<>();
     }
-    
-    
+
+    public String getWikiLink() {
+        return wikiLink;
+    }
+
+    public void setWikiLink(String wikiLink) {
+        this.wikiLink = wikiLink;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getName() {
         return name;
@@ -49,14 +77,6 @@ public class Hobby implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public List<Person> getPersons() {

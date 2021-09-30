@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -29,20 +30,20 @@ public class Address implements Serializable {
     private String street;
     private String houseNumber;
     
-    @OneToMany
-    private List<Person> person;
+    @OneToMany(mappedBy = "address")
+    private List<Person> persons;
     
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private CityInfo cityinfo;
+    @ManyToOne
+    private CityInfo cityInfo;
 
     public Address() {
     }
 
-    public Address(String street, String houseNumber, List<Person> person, CityInfo cityinfo) {
+    public Address(String street, String houseNumber, CityInfo cityinfo) {
         this.street = street;
         this.houseNumber = houseNumber;
-        this.person = person;
-        this.cityinfo = cityinfo;
+        this.persons = new ArrayList<>();
+        this.cityInfo = cityinfo;
     }
 
     public String getStreet() {
@@ -61,20 +62,20 @@ public class Address implements Serializable {
         this.houseNumber = houseNumber;
     }
 
-    public List<Person> getPerson() {
-        return person;
+    public List<Person> getPersons() {
+        return persons;
     }
 
-    public void setPerson(List<Person> person) {
-        this.person = person;
+    public void setPersons(List<Person> persons) {
+        this.persons = persons;
     }
 
     public CityInfo getCityinfo() {
-        return cityinfo;
+        return cityInfo;
     }
 
     public void setCityinfo(CityInfo cityinfo) {
-        this.cityinfo = cityinfo;
+        this.cityInfo = cityinfo;
     }
     
     
@@ -85,6 +86,31 @@ public class Address implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public CityInfo getCityInfo() {
+        return cityInfo;
+    }
+
+ public void setCityInfo(CityInfo cityInfo) {
+        this.cityInfo = cityInfo;
+        if(!cityInfo.getAddresses().contains(this)){
+            cityInfo.addAddress(this);
+        }
+    }
+
+    public void addPerson(Person person) {
+        if (person != null){
+            this.persons.add(person);
+            person.setAddress(this);
+        }
+    }
+    
+    public void removePerson(Person person) {
+        if (person != null){
+            this.persons.remove(person);
+            person.setAddress(null);
+        }
     }
 
     

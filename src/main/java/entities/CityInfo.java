@@ -6,8 +6,10 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,19 +27,21 @@ public class CityInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 4)
     private int zipCode;
+    @Column(length=35)
     private String city;
     
-    @OneToMany
-    private List<Address> address;
+    @OneToMany(mappedBy = "cityInfo", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Address> addresses;
 
     public CityInfo() {
     }
 
-    public CityInfo(int zipCode, String city, List<Address> address) {
+    public CityInfo(int zipCode, String city) {
         this.zipCode = zipCode;
         this.city = city;
-        this.address = address;
+        this.addresses = new ArrayList<>();
     }
 
     public int getZipCode() {
@@ -56,12 +60,12 @@ public class CityInfo implements Serializable {
         this.city = city;
     }
 
-    public List<Address> getAddress() {
-        return address;
+    public List<Address> getAddresses() {
+        return addresses;
     }
 
-    public void setAddress(List<Address> address) {
-        this.address = address;
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
     
     
@@ -74,6 +78,19 @@ public class CityInfo implements Serializable {
         this.id = id;
     }
 
+    public void addAddress(Address address) {
+        if (address != null){
+            this.addresses.add(address);
+            address.setCityInfo(this);
+        }
+    }
     
+    
+    public void removeAddress(Address address) {
+        if (address != null){
+            this.addresses.remove(address);
+            address.setCityInfo(null);
+        }
+    }
     
 }
