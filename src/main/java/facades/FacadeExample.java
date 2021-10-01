@@ -77,6 +77,9 @@ public class FacadeExample {
         emf = EMF_Creator.createEntityManagerFactory();
         FacadeExample fe = getFacadeExample(emf);
         fe.getAll().forEach(dto->System.out.println(dto));
+
+        PersonFacade pe = PersonFacade.getPersonFacade(emf);
+        pe.getAllPersons().forEach(dto -> System.out.println(dto));
     }
 
 }

@@ -64,13 +64,13 @@ public class PersonFacade {
             em.close();
         }
     }
-    
-    
-    public List<Person> getAllPersons() {
+
+
+    public List<PersonDTO> getAllPersons() {
         EntityManager em = emf.createEntityManager();
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
         List<Person> persons = query.getResultList();
-        return persons;
+        return PersonDTO.getDTOs(persons);
     }
  
      public Person createPerson(Person person) {

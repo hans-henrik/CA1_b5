@@ -5,6 +5,7 @@
  */
 package facades;
 
+import dtos.PersonDTO;
 import entities.Person;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
@@ -77,8 +78,8 @@ public class PersonFacadeTest extends TestCase {
     public void testGetAllPersons() {
         System.out.println("getAllPersons");
         PersonFacade instance = null;
-        List<Person> expResult = null;
-        List<Person> result = instance.getAllPersons();
+        List<PersonDTO> expResult = null;
+        List<PersonDTO> result = instance.getAllPersons();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
