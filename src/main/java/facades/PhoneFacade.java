@@ -9,6 +9,7 @@ import entities.Person;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.WebApplicationException;
 
 /**
@@ -35,10 +36,13 @@ public class PhoneFacade {
         return emf.createEntityManager();
     }
     
-    public Person getPersonByPhoneNumber(int phoneNumber) throws WebApplicationException {
-          
-        //TODO
-        return null;
-      }
+    public Person getPersonByPhoneNumber(EntityManager em, int phoneNumber) throws WebApplicationException {
+          TypedQuery<Person> q2 = em.createQuery("SELECT p FROM Person p WHERE p.phone = " + phoneNumber, Person.class);
+        List<Person> persons = q2.getResultList();
+        for (Person p : persons){
+            return p;
+        }
+        return null;    
+    }
     
 }

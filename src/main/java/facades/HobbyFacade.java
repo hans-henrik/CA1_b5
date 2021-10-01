@@ -9,6 +9,7 @@ import entities.Person;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.WebApplicationException;
 
 /**
@@ -35,11 +36,14 @@ public class HobbyFacade {
         return emf.createEntityManager();
     }
     
-     public List<Person> getPersonsByHobby(String hobbyName) throws WebApplicationException {
-          
-         
-         return null;
-         //TODO
-      }
-    
+     public void getPersonsByHobby(EntityManager em, String hobbyName) throws WebApplicationException {
+          TypedQuery<Person> q1 = em.createQuery("SELECT p FROM Person p INNER JOIN p.hobbies h WHERE h.name = :hobbyName", Person.class);
+         q1.setParameter("name",hobbyName);
+         List<Person> persons = q1.getResultList();
+         for (Person p : persons){
+             String str = p.getFirstName();
+           System.out.println(str);
+       }  
+     }
+      
 }
