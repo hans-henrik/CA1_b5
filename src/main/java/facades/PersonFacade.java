@@ -39,13 +39,18 @@ public class PersonFacade {
         return emf.createEntityManager();
     }
     
-    public Person getPersonById (EntityManager em, long id) {
+    public Person getPersonById ( long id) {
+          EntityManager em = getEntityManager();
+        try {
         TypedQuery<Person> q1 = em.createQuery("SELECT p FROM Person p WHERE p.p_id = " + id, Person.class);
         List<Person> persons = q1.getResultList();
         for (Person p : persons) {
             return p;
         }
         return null;
+    }finally{
+            em.close();
+        }
     }
     
     public Person editPerson(Person person) {

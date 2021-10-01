@@ -36,7 +36,9 @@ public class HobbyFacade {
         return emf.createEntityManager();
     }
     
-     public void getPersonsByHobby(EntityManager em, String hobbyName) throws WebApplicationException {
+     public void getPersonsByHobby(String hobbyName) throws WebApplicationException {
+          EntityManager em = getEntityManager();
+        try {
           TypedQuery<Person> q1 = em.createQuery("SELECT p FROM Person p INNER JOIN p.hobbies h WHERE h.name = :hobbyName", Person.class);
          q1.setParameter("name",hobbyName);
          List<Person> persons = q1.getResultList();
@@ -44,6 +46,9 @@ public class HobbyFacade {
              String str = p.getFirstName();
            System.out.println(str);
        }  
-     }
+     }finally {
+            em.close();
+        }
       
+     }
 }

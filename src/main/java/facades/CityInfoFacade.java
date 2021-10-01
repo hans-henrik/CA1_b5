@@ -37,21 +37,23 @@ public class CityInfoFacade {
         return emf.createEntityManager();
     }
     
-     public List<Person> getPersonsByZipCode(EntityManager em, int zipCode) throws WebApplicationException {
-       TypedQuery<Person> q1 = em.createQuery("SELECT a FROM Address a INNER JOIN a.cityInfo.addresses s WHERE s.styleName = :swimStyle", Adress.class);
+    public List<Person> getPersonsByZipCode( int zipCode) throws WebApplicationException {
+          EntityManager em = getEntityManager();
+        try {
+       TypedQuery<Person> q1 = em.createQuery("SELECT a FROM Address a INNER JOIN a.cityInfo.addresses p WHERE p.persons = : zipCode", Person.class);
+           q1.setParameter("persons",zipCode);
+         List<Person> persons = q1.getResultList();
+         for (Person p : persons){
+             String str = p.getFirstName();
+           System.out.println(str);
+       } 
          return null;
-         //TODO
-      }
-      public void getPersonsByStyleName (EntityManager em, String swimStyle) {
-        TypedQuery<Person> q1 = em.createQuery("SELECT p FROM Person p INNER JOIN p.styles s WHERE s.styleName = :swimStyle", Person.class);
-        q1.setParameter("swimStyle",swimStyle);
-        List<Person> persons = q1.getResultList();
-        for (Person p : persons) {
-            String str = p.getName();
-            System.out.println(str);
+         
+      }finally{
+            em.close();
         }
-        
-    }
+        }
+    
      
      public List<CityInfo> getAllCityInfos() {
          

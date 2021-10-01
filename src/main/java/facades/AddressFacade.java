@@ -6,8 +6,11 @@
 package facades;
 
 import entities.Address;
+import entities.Person;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.WebApplicationException;
 
 /**
@@ -34,11 +37,19 @@ public class AddressFacade {
         return emf.createEntityManager();
     }
     
-    public Address getAddress(Address address) throws WebApplicationException {
-        
+    public Person getPersonByAddress( Address address) throws WebApplicationException {
+         EntityManager em = getEntityManager();
+        try {
+        TypedQuery<Person> q1 = em.createQuery("SELECT p FROM Person p WHERE p.address = " + address, Person.class);
+        List<Person> persons = q1.getResultList();
+        for (Person p : persons) {
+            return p;
+        }
         return null;
-        
-        //TODO
-    }
-    
+    }finally{
+            em.close();
+        }
+   }
 }
+    
+
