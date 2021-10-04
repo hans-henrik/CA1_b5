@@ -26,6 +26,7 @@ public class ApplicationConfig extends Application {
         // Resources to be added (found by <domain>/<war>/api/<path>)
         resources.add(rest.RenameMeResource.class);
         resources.add(rest.PersonResource.class);
+        resources.add(rest.PhoneResource.class);
     }
     
 }

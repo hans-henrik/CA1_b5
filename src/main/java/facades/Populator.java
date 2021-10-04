@@ -7,6 +7,7 @@ package facades;
 
 import dtos.RenameMeDTO;
 import entities.Person;
+import entities.Phone;
 import entities.RenameMe;
 import javax.persistence.EntityManagerFactory;
 import utils.EMF_Creator;
@@ -27,6 +28,10 @@ public class Populator {
         pe.createPerson(new Person("hupsihejsa@gmail.com", "Huxi", "Bach"));
         pe.createPerson(new Person("hahaha@gmail.com", "Joker", "Mand"));
         pe.createPerson(new Person("ikkePeter@gmail.com", "Hans-Henrik", "Peterlmao"));
+
+        Person p1 = new Person("telefonmand@hotmail.com","Telefonmand","Telefonsen");
+        p1.addPhone(new Phone(20212021, "Nokia", p1));
+        pe.createPerson(p1);
     }
     
     public static void main(String[] args) {

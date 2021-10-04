@@ -5,6 +5,7 @@
  */
 package facades;
 
+import dtos.PersonDTO;
 import entities.Person;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -36,18 +37,17 @@ public class PhoneFacade {
         return emf.createEntityManager();
     }
     
-    public Person getPersonByPhoneNumber(int phoneNumber) {
+    public PersonDTO getPersonByPhoneNumber(int phoneNumber) {
         EntityManager em = emf.createEntityManager();
         Person person = null;
         try{
-            TypedQuery<Person> query = em.createQuery("SELECT p from Person p INNER JOIN p.phone ph WHERE ph.Number = :phoneNumber",Person.class);
+            TypedQuery<Person> query = em.createQuery("SELECT p from Person p INNER JOIN p.phone ph WHERE ph.number = :phoneNumber",Person.class);
             query.setParameter("phoneNumber", phoneNumber);
             person = query.getSingleResult();
-            
         } finally{
             em.close();
         }
-        return person;
+        return new PersonDTO(person);
     }
     
 }

@@ -26,7 +26,7 @@ public class Phone implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int Number;
+    private int number;
     private String description;
     
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -35,18 +35,18 @@ public class Phone implements Serializable {
     public Phone() {
     }
 
-    public Phone(int Number, String description, Person person) {
-        this.Number = Number;
+    public Phone(int number, String description, Person person) {
+        this.number = number;
         this.description = description;
         this.person = person;
     }
 
     public int getNumber() {
-        return Number;
+        return number;
     }
 
     public void setNumber(int Number) {
-        this.Number = Number;
+        this.number = Number;
     }
 
     public String getDescription() {
