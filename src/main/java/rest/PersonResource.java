@@ -24,23 +24,15 @@ public class PersonResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String demo() {
-        return "{\"You made it into /people!\"}";
+        return "{\"msg\":\"You made it into /people!\"}";
     }
 
-    @Path("showall")
+    @Path("show")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String showPeople() {
 
         List<PersonDTO> pdto = FACADE.getAllPersons();
         return GSON.toJson(pdto);
-
-        /*
-        StringBuilder sb = new StringBuilder();
-        FACADE.getAllPersons().forEach(dto -> sb.append(dto).append("\n"));
-        //System.out.println("--------------->"+count);
-        return sb.toString();  //Done manually so no need for a DTO
-        */
-
     }
 }

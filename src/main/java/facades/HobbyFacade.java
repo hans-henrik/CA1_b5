@@ -5,7 +5,9 @@
  */
 package facades;
 
+import dtos.PersonDTO;
 import entities.Person;
+
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,17 +15,17 @@ import javax.persistence.TypedQuery;
 import javax.ws.rs.WebApplicationException;
 
 /**
- *
  * @author peter
  */
 public class HobbyFacade {
-    
+
     private static HobbyFacade instance;
     private static EntityManagerFactory emf;
-    
+
     //Private Constructor to ensure Singleton
-    private HobbyFacade() {}
-    
+    private HobbyFacade() {
+    }
+
     public static HobbyFacade getHobbyFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
@@ -35,20 +37,17 @@ public class HobbyFacade {
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-    
-     public void getPersonsByHobby(String hobbyName) throws WebApplicationException {
-          EntityManager em = getEntityManager();
+
+    public List<PersonDTO> getPersonsByHobby(String hobbyName) throws WebApplicationException {
+        EntityManager em = getEntityManager();
         try {
-          TypedQuery<Person> q1 = em.createQuery("SELECT p FROM Person p INNER JOIN p.hobbies h WHERE h.name = :hobbyName", Person.class);
-         q1.setParameter("name",hobbyName);
-         List<Person> persons = q1.getResultList();
-         for (Person p : persons){
-             String str = p.getFirstName();
-           System.out.println(str);
-       }  
-     }finally {
+            TypedQuery<Person> q1 = em.createQuery("SELECT p FROM Person p INNER JOIN p.hobbies h WHERE h.name = :hobbyName", Person.class);
+            q1.setParameter("hobbyName", hobbyName);
+            List<Person> persons = q1.getResultList();
+            return PersonDTO.getDTOs(persons);
+        } finally {
             em.close();
         }
-      
-     }
+
+    }
 }

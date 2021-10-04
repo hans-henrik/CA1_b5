@@ -6,6 +6,7 @@
 package facades;
 
 import dtos.RenameMeDTO;
+import entities.Hobby;
 import entities.Person;
 import entities.Phone;
 import entities.RenameMe;
@@ -30,8 +31,10 @@ public class Populator {
         pe.createPerson(new Person("ikkePeter@gmail.com", "Hans-Henrik", "Peterlmao"));
 
         Person p1 = new Person("telefonmand@hotmail.com","Telefonmand","Telefonsen");
+        p1.addHobbies(new Hobby("hiking", "wiki.com/hiking", "exercise", "insanity"));
         p1.addPhone(new Phone(20212021, "Nokia", p1));
         pe.createPerson(p1);
+
     }
     
     public static void main(String[] args) {
