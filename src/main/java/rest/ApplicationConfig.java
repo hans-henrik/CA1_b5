@@ -22,6 +22,8 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(errorhandling.GenericExceptionMapper.class);
         resources.add(org.glassfish.jersey.server.wadl.internal.WadlResource.class);
+
+        // Resources to be added (found by <domain>/<war>/api/<path>)
         resources.add(rest.RenameMeResource.class);
         resources.add(rest.PersonResource.class);
     }
