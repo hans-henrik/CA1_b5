@@ -36,17 +36,18 @@ public class PhoneFacade {
         return emf.createEntityManager();
     }
     
-    public Person getPersonByPhoneNumber( int phoneNumber) throws WebApplicationException {
-          EntityManager em = getEntityManager();
-        try {
-          TypedQuery<Person> q2 = em.createQuery("SELECT p FROM Person p WHERE p.phone = " + phoneNumber, Person.class);
-        List<Person> persons = q2.getResultList();
-        for (Person p : persons){
-            return p;
+    public Person getPersonByPhoneNumber(int phoneNumber) {
+        EntityManager em = emf.createEntityManager();
+        Person person = null;
+        try{
+            TypedQuery<Person> query = em.createQuery("SELECT p from Person p INNER JOIN p.phone ph WHERE ph.Number = :phoneNumber",Person.class);
+            query.setParameter("phoneNumber", phoneNumber);
+            person = query.getSingleResult();
+            
+        } finally{
+            em.close();
         }
-        return null;    
-    } finally{
-        em.close();
+        return person;
     }
-  }  
+    
 }

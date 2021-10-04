@@ -6,18 +6,23 @@
 package facades;
 
 import entities.Address;
+import entities.CityInfo;
 import entities.Person;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
 
 public class AddressFacadeTest extends TestCase{
     
    private static AddressFacade facade;
+   private static Person el;
 
     private static EntityManagerFactory emf;
     
@@ -41,11 +46,15 @@ public class AddressFacadeTest extends TestCase{
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
+        el = new Person("something","HH","somethingagain");
+        CityInfo cityinfo = new CityInfo(2791,"dragør");
+        Address a = new Address("hhvej","2",cityinfo);
+        el.setAddress(a);
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
-            em.persist(new Person("hh@gmail.com","HH","HHH")); 
-            em.persist(new Person("Peter@gmail.com","Peter","Petersen")); 
+            em.persist(el);
+            em.persist(new Person("Peter@gmail.com","HH","HHH")); 
             em.persist(new Person("Oliver@gmail.com","Oliver","Oliversen")); 
 
             em.getTransaction().commit();
@@ -53,24 +62,13 @@ public class AddressFacadeTest extends TestCase{
             em.close();
         }
     }
-    /**
-     * Test of getAddressFacade method, of class AddressFacade.
-     */
-    public void testGetAddressFacade() {
-        System.out.println("getAddressFacade");
-        EntityManagerFactory _emf = null;
-        AddressFacade expResult = null;
-        AddressFacade result = AddressFacade.getAddressFacade(_emf);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getPersonByAddress method, of class AddressFacade.
-     */
+    
+    @Test
     public void testGetPersonByAddress() {
-       //facade.getPersonByAddress(address)
+        
+        List<Person> persons = facade.getPersonByAddress(el.getAddress());
+        assertEquals(1,persons.size());
+       
     }
     
 }
