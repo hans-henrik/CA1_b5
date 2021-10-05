@@ -35,7 +35,8 @@ public class HobbyResource {
     @Path("/{hobbyName}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String showPeopleWithHobby(@PathParam("hobbyName") Hobby hobby){
+    public String showPeopleWithHobby(@PathParam("hobbyName") String hobbyName){
+        Hobby hobby = new Hobby(hobbyName, "", "", "");
         List<PersonDTO> peoples = FACADE.getPersonsByHobby(hobby);
         return GSON.toJson(peoples);
     }
