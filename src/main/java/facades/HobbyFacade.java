@@ -7,7 +7,7 @@ package facades;
 
 import dtos.PersonDTO;
 import entities.Person;
-
+import entities.Hobby;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -38,7 +38,8 @@ public class HobbyFacade {
         return emf.createEntityManager();
     }
 
-    public List<PersonDTO> getPersonsByHobby(String hobbyName) throws WebApplicationException {
+    public List<PersonDTO> getPersonsByHobby(Hobby hobby) throws WebApplicationException {
+        String hobbyName = hobby.getName();
         EntityManager em = getEntityManager();
         try {
             TypedQuery<Person> q1 = em.createQuery("SELECT p FROM Person p INNER JOIN p.hobbies h WHERE h.name = :hobbyName", Person.class);

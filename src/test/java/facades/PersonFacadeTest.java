@@ -1,114 +1,101 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package facades;
 
 import dtos.PersonDTO;
+import entities.Address;
+import entities.CityInfo;
+import entities.Hobby;
 import entities.Person;
+import entities.Phone;
 import java.util.List;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import static junit.framework.Assert.assertEquals;
 import junit.framework.TestCase;
+import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import utils.EMF_Creator;
+public class PersonFacadeTest extends TestCase{
+     private static PersonFacade facade;
+   private static Person el;
+   private static Hobby h;
+   private static Phone p;
+   private static Address a;
+   private static CityInfo cityinfo;
 
-/**
- *
- * @author EG
- */
-public class PersonFacadeTest extends TestCase {
+    private static EntityManagerFactory emf;
+
+  public PersonFacadeTest() {
+    }
+
+  @BeforeAll
+    public static void setUpClass() {
+       emf = EMF_Creator.createEntityManagerFactoryForTest();
+       facade = PersonFacade.getPersonFacade(emf);
+    }
     
-    public PersonFacadeTest(String testName) {
-        super(testName);
+  @AfterAll
+    public static void tearDownClass() {
+//        Clean up database after test is done or use a persistence unit with drop-and-create to start up clean on every test
     }
     
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+   // Setup the DataBase in a known state BEFORE EACH TEST
+    //TODO -- Make sure to change the code below to use YOUR OWN entity class
+    @BeforeEach
+    public void setUp() {
+        EntityManager em = emf.createEntityManager();
+        el = new Person("something","HH","somethingagain");
+        CityInfo cityinfo = new CityInfo(2791,"dragør");
+        Address a = new Address("hhvej","2",cityinfo);
+        el.setAddress(a);
+        h = new Hobby("løb","1","2","3");
+        p = new Phone(123,"Min iphone",el);
+        el.addHobbies(h);
+        el.addPhone(p);
+       
+        try {
+            em.getTransaction().begin();
+            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+            em.persist(el);
+            em.persist(new Person("Peter@gmail.com","HH","HHH")); 
+            em.persist(new Person("Oliver@gmail.com","Oliver","Oliversen")); 
+        em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+      @Test
+    public void testGetPersonById(){
+        Person persons = facade.getPersonById(el.getId());
+        assertEquals(el.getFirstName(),persons.getFirstName());
     }
     
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @Test
+    public void testGetAllPersons(){
+        List<PersonDTO> persons = facade.getAllPersons();
+        assertEquals(3,persons.size());
     }
-
-    /**
-     * Test of getPersonFacade method, of class PersonFacade.
-     */
-    public void testGetPersonFacade() {
-        System.out.println("getPersonFacade");
-        EntityManagerFactory _emf = null;
-        PersonFacade expResult = null;
-        PersonFacade result = PersonFacade.getPersonFacade(_emf);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    
+    @Test
+    public void testCreatePerson()throws Exception{
+        facade.createPerson(new Person("1","2","3"));
+        assertEquals(4,facade.getPersonCount());
     }
-
-    /**
-     * Test of getPersonById method, of class PersonFacade.
-     */
-    public void testGetPersonById() {
-        System.out.println("getPersonById");
-        long id = 0L;
-        PersonFacade instance = null;
-        Person expResult = null;
-        Person result = instance.getPersonById(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    
+    @Test
+    public void testRemovePerson(){
+        facade.removePerson(el.getId());
+        assertEquals(2,facade.getPersonCount());
+        
     }
-
-    /**
-     * Test of editPerson method, of class PersonFacade.
-     */
-    public void testEditPerson() {
-        System.out.println("editPerson");
-        Person person = null;
-        PersonFacade instance = null;
-        Person expResult = null;
-        Person result = instance.editPerson(person);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getAllPersons method, of class PersonFacade.
-     */
-    public void testGetAllPersons() {
-        System.out.println("getAllPersons");
-        PersonFacade instance = null;
-        List<PersonDTO> expResult = null;
-        List<PersonDTO> result = instance.getAllPersons();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of createPerson method, of class PersonFacade.
-     */
-    public void testCreatePerson() {
-        System.out.println("createPerson");
-        Person person = null;
-        PersonFacade instance = null;
-        Person expResult = null;
-        Person result = instance.createPerson(person);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of removePerson method, of class PersonFacade.
-     */
-    public void testRemovePerson() {
-        System.out.println("removePerson");
-        int id = 0;
-        PersonFacade instance = null;
-        instance.removePerson(id);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    
+    @Test
+    public void testEditPerson(){
+        el.setEmail("hej");
+       facade.editPerson(el);
+        assertEquals("hej",el.getEmail());
     }
     
 }

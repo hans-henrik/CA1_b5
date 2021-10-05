@@ -8,6 +8,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.PersonDTO;
+import entities.Hobby;
 import facades.HobbyFacade;
 import utils.EMF_Creator;
 
@@ -34,8 +35,8 @@ public class HobbyResource {
     @Path("/{hobbyName}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String showPeopleWithHobby(@PathParam("hobbyName") String hobbyName){
-        List<PersonDTO> peoples = FACADE.getPersonsByHobby(hobbyName);
+    public String showPeopleWithHobby(@PathParam("hobbyName") Hobby hobby){
+        List<PersonDTO> peoples = FACADE.getPersonsByHobby(hobby);
         return GSON.toJson(peoples);
     }
 }

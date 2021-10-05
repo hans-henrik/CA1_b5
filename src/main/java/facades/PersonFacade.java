@@ -42,13 +42,23 @@ public class PersonFacade {
     public Person getPersonById ( long id) {
           EntityManager em = getEntityManager();
         try {
-        TypedQuery<Person> q1 = em.createQuery("SELECT p FROM Person p WHERE p.p_id = " + id, Person.class);
+        TypedQuery<Person> q1 = em.createQuery("SELECT p FROM Person p WHERE p.id = " + id, Person.class);
         List<Person> persons = q1.getResultList();
         for (Person p : persons) {
             return p;
         }
         return null;
     }finally{
+            em.close();
+        }
+    }
+    
+       public long getPersonCount(){
+        EntityManager em = emf.createEntityManager();
+        try{
+            long eCount = (long)em.createQuery("SELECT COUNT(p) FROM Person p").getSingleResult();
+            return eCount;
+        }finally{  
             em.close();
         }
     }
@@ -87,7 +97,7 @@ public class PersonFacade {
     
      //TODO update errorhandling
      
-      public void removePerson(int id) throws WebApplicationException{
+      public void removePerson(long id) throws WebApplicationException{
         EntityManager em = emf.createEntityManager();
         Person person;
         try {
@@ -102,13 +112,7 @@ public class PersonFacade {
             em.close();
         }
     }
-
-    void create(Person person) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-      
-      
-      
+    
       
      
 }

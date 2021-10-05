@@ -40,19 +40,16 @@ public class CityInfoFacade {
     public List<Person> getPersonsByZipCode( int zipCode) throws WebApplicationException {
           EntityManager em = getEntityManager();
         try {
-       TypedQuery<Person> q1 = em.createQuery("SELECT a FROM Address a INNER JOIN a.cityInfo.addresses p WHERE p.persons = : zipCode", Person.class);
-           q1.setParameter("persons",zipCode);
+       TypedQuery<Person> q1 = em.createQuery("SELECT p FROM Person p INNER JOIN p.address.cityInfo c WHERE c.zipCode = :zipCode", Person.class);
+           q1.setParameter("zipCode",zipCode);
          List<Person> persons = q1.getResultList();
-         for (Person p : persons){
-             String str = p.getFirstName();
-           System.out.println(str);
-       } 
-         return null;
+         
+         return persons;
          
       }finally{
             em.close();
         }
-        }
+      }
     
      
      public List<CityInfo> getAllCityInfos() {
