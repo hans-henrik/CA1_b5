@@ -6,10 +6,8 @@
 package facades;
 
 import dtos.RenameMeDTO;
-import entities.Hobby;
-import entities.Person;
-import entities.Phone;
-import entities.RenameMe;
+import entities.*;
+
 import javax.persistence.EntityManagerFactory;
 import utils.EMF_Creator;
 
@@ -33,13 +31,23 @@ public class Populator {
         Person p1 = new Person("telefonmand@hotmail.com","Telefonmand","Telefonsen");
         p1.addHobbies(new Hobby("hiking", "wiki.com/hiking", "exercise", "insanity"));
         p1.addPhone(new Phone(20212021, "Nokia", p1));
+        p1.setAddress(new Address("Violvej","12", new CityInfo(2820,"Gentofte")));
 
         Person p2 = new Person("hoppemand@yahoo.com", "Hopper", "Hopsen");
         p2.addHobbies(new Hobby("hoppe", "wiki.com/hopning", "exercise", "hop"));
         p2.addPhone(new Phone(12345678, "Huawei", p2));
+        p2.setAddress(new Address("Hoppevej", "83", new CityInfo(9999, "Køge")));
 
         pe.createPerson(p1);
         pe.createPerson(p2);
+
+        CityInfo c1 = new CityInfo(2820, "Gentofte");
+        CityInfo c2 = new CityInfo(2840, "Holte");
+        CityInfo c3 = new CityInfo(2450, "København SV");
+
+        CityInfoFacade.addCity(c1);
+        CityInfoFacade.addCity(c2);
+        CityInfoFacade.addCity(c3);
     }
     
     public static void main(String[] args) {

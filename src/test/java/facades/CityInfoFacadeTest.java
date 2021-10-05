@@ -1,5 +1,6 @@
 package facades;
 
+import dtos.PersonDTO;
 import entities.Address;
 import entities.CityInfo;
 import entities.Person;
@@ -59,7 +60,7 @@ public class CityInfoFacadeTest extends TestCase{
     
  @Test
     public void testGetPersonByZipCode(){
-        List<Person> persons = facade.getPersonsByZipCode(el.getAddress().getCityInfo().getZipCode());
+        List<PersonDTO> persons = facade.getPersonsByZipCode(el.getAddress().getCityInfo().getZipCode());
         assertEquals(1,persons.size());
     }
 }

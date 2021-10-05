@@ -5,8 +5,12 @@
  */
 package facades;
 
+import dtos.CityInfoDTO;
+import dtos.PersonDTO;
 import entities.CityInfo;
 import entities.Person;
+import utils.EMF_Creator;
+
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -37,25 +41,36 @@ public class CityInfoFacade {
         return emf.createEntityManager();
     }
     
-    public List<Person> getPersonsByZipCode( int zipCode) throws WebApplicationException {
+    public List<PersonDTO> getPersonsByZipCode( int zipCode) throws WebApplicationException {
           EntityManager em = getEntityManager();
         try {
        TypedQuery<Person> q1 = em.createQuery("SELECT p FROM Person p INNER JOIN p.address.cityInfo c WHERE c.zipCode = :zipCode", Person.class);
            q1.setParameter("zipCode",zipCode);
          List<Person> persons = q1.getResultList();
          
-         return persons;
+         return PersonDTO.getDTOs(persons);
          
       }finally{
             em.close();
         }
       }
-    
      
-     public List<CityInfo> getAllCityInfos() {
-         
-         return null;
-         //TODO
+     public List<CityInfoDTO> getAllCityInfos() {
+         EntityManager em = getEntityManager();
+         try {
+             TypedQuery<CityInfo> query = em.createQuery("SELECT c FROM CityInfo c", CityInfo.class);
+             List<CityInfo> cities = query.getResultList();
+             return CityInfoDTO.getDTOs(cities);
+         } finally {
+             em.close();
+         }
+     }
+
+     public static void addCity(CityInfo cityInfo){
+        EntityManager em = EMF_Creator.createEntityManagerFactory().createEntityManager();
+        em.getTransaction().begin();
+        em.persist(cityInfo);
+        em.close();
      }
     
 }

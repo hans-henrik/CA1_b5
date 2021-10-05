@@ -29,11 +29,12 @@ public class CityInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 4)
-    private int zipCode;
+
     @Column(length=35)
     private String city;
-    
+
+    @Column(length = 4)
+    private int zipCode;
     @OneToMany(mappedBy = "cityInfo", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Address> addresses;
 
