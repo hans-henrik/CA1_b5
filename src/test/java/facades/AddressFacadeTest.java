@@ -52,6 +52,7 @@ public class AddressFacadeTest extends TestCase{
         el.setAddress(a);
         try {
             em.getTransaction().begin();
+            em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
             em.persist(el);
             em.persist(new Person("Peter@gmail.com","HH","HHH")); 
