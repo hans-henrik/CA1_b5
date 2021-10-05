@@ -9,8 +9,10 @@ import dtos.PersonDTO;
 import entities.Person;
 
 import java.util.List;
+import java.util.Queue;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.WebApplicationException;
 
@@ -49,5 +51,17 @@ public class HobbyFacade {
             em.close();
         }
 
+    }
+
+    public long countPeopleByHobby(String hobbyName) throws WebApplicationException {
+        EntityManager em = getEntityManager();
+        try {
+            Query query = em.createQuery("SELECT COUNT(p) FROM Person p INNER JOIN p.hobbies h WHERE h.name = :hobbyName");
+            query.setParameter("hobbyName", hobbyName);
+            long count = (long) query.getSingleResult();
+            return count;
+        } finally {
+            em.close();
+        }
     }
 }

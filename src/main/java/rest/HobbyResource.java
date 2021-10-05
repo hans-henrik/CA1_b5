@@ -38,4 +38,11 @@ public class HobbyResource {
         List<PersonDTO> peoples = FACADE.getPersonsByHobby(hobbyName);
         return GSON.toJson(peoples);
     }
+
+    @Path("/count/{hobbyName}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String countPeopleWithHobby(@PathParam("hobbyName") String hobbyName){
+        return "\"msg\":\"" + FACADE.countPeopleByHobby(hobbyName) + "\"";
+    }
 }
