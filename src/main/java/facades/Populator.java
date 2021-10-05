@@ -33,8 +33,13 @@ public class Populator {
         Person p1 = new Person("telefonmand@hotmail.com","Telefonmand","Telefonsen");
         p1.addHobbies(new Hobby("hiking", "wiki.com/hiking", "exercise", "insanity"));
         p1.addPhone(new Phone(20212021, "Nokia", p1));
-        pe.createPerson(p1);
 
+        Person p2 = new Person("hoppemand@yahoo.com", "Hopper", "Hopsen");
+        p2.addHobbies(new Hobby("hoppe", "wiki.com/hopning", "exercise", "hop"));
+        p2.addPhone(new Phone(12345678, "Huawei", p2));
+
+        pe.createPerson(p1);
+        pe.createPerson(p2);
     }
     
     public static void main(String[] args) {
