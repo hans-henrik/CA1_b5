@@ -66,4 +66,5 @@ public class PersonResource {
         return GSON.toJson(pDTO);   
     }
     
+    
 }
