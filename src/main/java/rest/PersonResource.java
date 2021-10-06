@@ -57,7 +57,7 @@ public class PersonResource {
         return GSON.toJson(pDTO);   
     }
     
-     @Path("removeperson")
+    @Path("removeperson")
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     public String removePersonDTO(String person){
