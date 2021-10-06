@@ -35,7 +35,7 @@ public class PersonFacade {
         return instance;
     }
 
-    private EntityManager getEntityManager() {
+     private EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
     
