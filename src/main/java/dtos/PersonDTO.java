@@ -33,7 +33,9 @@ public class PersonDTO {
         this.firstName = p.getFirstName();
         this.lastName = p.getLastName();
         this.hobbies = HobbyDTO.getDTOs(p.getHobbies());
-        this.address = new AddressDTO(p.getAddress());
+        if (p.getAddress() != null) {
+            this.address = new AddressDTO(p.getAddress());
+        }
     }
 
     public static List<PersonDTO> getDTOs(List<Person> persons){
