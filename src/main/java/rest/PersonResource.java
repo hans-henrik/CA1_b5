@@ -48,4 +48,22 @@ public class PersonResource {
         
     }
     
+    @Path("editperson")
+    @POST
+    @Produces({MediaType.APPLICATION_JSON})
+    public String editPersonDTO(String person){
+        PersonDTO pDTO = GSON.fromJson(person,PersonDTO.class);
+                pDTO= FACADE.editPersonDTO(pDTO);
+        return GSON.toJson(pDTO);   
+    }
+    
+     @Path("removeperson")
+    @POST
+    @Produces({MediaType.APPLICATION_JSON})
+    public String removePersonDTO(String person){
+        PersonDTO pDTO = GSON.fromJson(person,PersonDTO.class);
+                pDTO= FACADE.editPersonDTO(pDTO);
+        return GSON.toJson(pDTO);   
+    }
+    
 }

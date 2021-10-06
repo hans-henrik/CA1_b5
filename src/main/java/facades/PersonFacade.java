@@ -74,6 +74,19 @@ public class PersonFacade {
             em.close();
         }
     }
+    
+     public PersonDTO editPersonDTO(PersonDTO person) {
+         Person p = new Person(person.getEmail(), person.getFirstName(), person.getLastName());
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(p);
+            em.getTransaction().commit();
+            return new PersonDTO(p);
+        } finally {
+            em.close();
+        }
+    }
 
 
     public List<PersonDTO> getAllPersons() {
@@ -128,8 +141,7 @@ public class PersonFacade {
         } finally {
             em.close();
         }
-    }
-    
-      
+      }
      
 }
+      
