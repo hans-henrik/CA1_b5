@@ -38,6 +38,10 @@ public class PersonDTO {
         }
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public static List<PersonDTO> getDTOs(List<Person> persons){
         List<PersonDTO> dtos = new ArrayList();
         persons.forEach(person->dtos.add(new PersonDTO(person)));

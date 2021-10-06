@@ -76,7 +76,7 @@ public class PersonFacade {
     }
     
      public PersonDTO editPersonDTO(PersonDTO person) {
-         Person p = new Person(person.getEmail(), person.getFirstName(), person.getLastName());
+         Person p = new Person(person);
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
@@ -111,7 +111,7 @@ public class PersonFacade {
      
         public PersonDTO createPersonDTO(PersonDTO person)throws WebApplicationException {
         EntityManager em = emf.createEntityManager();
-        Person p = new Person(person.getEmail(), person.getFirstName(),person.getLastName());
+        Person p = new Person(person);
         try {
             em.getTransaction().begin();
             if (person == null) {
