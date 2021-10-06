@@ -80,6 +80,7 @@ public class PersonFacade {
         EntityManager em = emf.createEntityManager();
         TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
         List<Person> persons = query.getResultList();
+        persons.forEach(p -> System.out.println(p));
         return PersonDTO.getDTOs(persons);
     }
  

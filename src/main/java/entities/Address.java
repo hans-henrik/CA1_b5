@@ -115,6 +115,14 @@ public class Address implements Serializable {
         }
     }
 
-    
-    
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", street='" + street + '\'' +
+                ", houseNumber='" + houseNumber + '\'' +
+                ", persons=" + persons +
+                ", cityInfo=" + cityInfo +
+                '}';
+    }
 }

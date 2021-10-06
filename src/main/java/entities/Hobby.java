@@ -100,6 +100,15 @@ public class Hobby implements Serializable {
         this.id = id;
     }
 
-    
-    
+    @Override
+    public String toString() {
+        return "Hobby{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", wikiLink='" + wikiLink + '\'' +
+                ", category='" + category + '\'' +
+                ", type='" + type + '\'' +
+                ", persons=" + persons +
+                '}';
+    }
 }

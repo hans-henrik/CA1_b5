@@ -95,5 +95,14 @@ public class CityInfo implements Serializable {
             address.setCityInfo(null);
         }
     }
-    
+
+    @Override
+    public String toString() {
+        return "CityInfo{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", zipCode=" + zipCode +
+                ", addresses=" + addresses +
+                '}';
+    }
 }

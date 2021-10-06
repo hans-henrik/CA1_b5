@@ -24,7 +24,7 @@ public class AddressDTO {
         if(address.getId() != null) this.id = address.getId();
         this.street = address.getStreet();
         this.houseNumber = address.getHouseNumber();
-        this.persons = PersonDTO.getDTOs(address.getPersons());
+        //this.persons = PersonDTO.getDTOs(address.getPersons());
         this.cityInfo = new CityInfoDTO(address.getCityInfo());
     }
 

@@ -141,12 +141,18 @@ public class Person implements Serializable {
             hobby.getPersons().remove(this);
         }
     }
-    
-    
-    
-    
-    
 
-   
-    
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", hobbies=" + hobbies +
+                ", address=" + address +
+                ", phone=" + phone +
+                '}';
+    }
 }

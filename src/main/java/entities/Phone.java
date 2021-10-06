@@ -75,6 +75,13 @@ public class Phone implements Serializable {
         this.id = id;
     }
 
-    
-    
+    @Override
+    public String toString() {
+        return "Phone{" +
+                "id=" + id +
+                ", number=" + number +
+                ", description='" + description + '\'' +
+                ", person=" + person +
+                '}';
+    }
 }

@@ -30,7 +30,7 @@ public class HobbyDTO {
         this.wikiLink = hobby.getWikiLink();
         this.category = hobby.getCategory();
         this.type = hobby.getType();
-        this.persons = PersonDTO.getDTOs(hobby.getPersons());
+        //this.persons = PersonDTO.getDTOs(hobby.getPersons());
     }
 
     public static List<HobbyDTO> getDTOs(List<Hobby> hobbies){
