@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.core.Response;
 
 @Path("people")
@@ -49,7 +50,7 @@ public class PersonResource {
     }
     
     @Path("editperson")
-    @POST
+    @PUT
     @Produces({MediaType.APPLICATION_JSON})
     public String editPersonDTO(String person){
         PersonDTO pDTO = GSON.fromJson(person,PersonDTO.class);
@@ -57,14 +58,16 @@ public class PersonResource {
         return GSON.toJson(pDTO);   
     }
     
-     @Path("removeperson")
-    @POST
-    @Produces({MediaType.APPLICATION_JSON})
-    public String removePersonDTO(String person){
-        PersonDTO pDTO = GSON.fromJson(person,PersonDTO.class);
-                pDTO= FACADE.editPersonDTO(pDTO);
-        return GSON.toJson(pDTO);   
-    }
+    
+    //TODO add Remove
+//    @Path("removeperson")
+//    @POST
+//    @Produces({MediaType.APPLICATION_JSON})
+//    public String removePersonDTO(String person){
+//        PersonDTO pDTO = GSON.fromJson(person,PersonDTO.class);
+//                pDTO= FACADE.editPersonDTO(pDTO);
+//        return GSON.toJson(pDTO);   
+//    }
     
     
 }
