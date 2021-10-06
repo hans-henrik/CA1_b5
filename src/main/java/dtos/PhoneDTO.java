@@ -24,7 +24,7 @@ public class PhoneDTO {
         this.description = description;
     }
 
-    public List<PhoneDTO> getDTOs(List<Phone> phones){
+    public static List<PhoneDTO> getDTOs(List<Phone> phones){
         List<PhoneDTO> phoneDTOS = new ArrayList<PhoneDTO>();
         phones.forEach(phone -> phoneDTOS.add(new PhoneDTO(phone)));
         return phoneDTOS;

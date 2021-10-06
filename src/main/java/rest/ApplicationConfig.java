@@ -1,5 +1,7 @@
 package rest;
 
+import utils.EMF_Creator;
+
 import java.util.Set;
 import javax.ws.rs.core.Application;
 
@@ -8,6 +10,7 @@ public class ApplicationConfig extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
+        EMF_Creator.createEntityManagerFactory();
         Set<Class<?>> resources = new java.util.HashSet<>();
         addRestResourceClasses(resources);
         return resources;

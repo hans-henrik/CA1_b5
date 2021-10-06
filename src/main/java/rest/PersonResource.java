@@ -31,7 +31,6 @@ public class PersonResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String showPeople() {
-
         List<PersonDTO> pdto = FACADE.getAllPersons();
         return GSON.toJson(pdto);
     }

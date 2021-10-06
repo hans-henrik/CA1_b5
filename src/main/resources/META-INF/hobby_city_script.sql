@@ -1800,6 +1800,6 @@ INSERT INTO CITYINFO (city, zipcode) VALUES ('Vikarbyrgi','928');
 INSERT INTO CITYINFO (city, zipcode) VALUES ('Porkeri','950');
 INSERT INTO CITYINFO (city, zipcode) VALUES ('Hov','960');
 INSERT INTO CITYINFO (city, zipcode) VALUES ('Sumba','970');
-INSERT INTO CITYINFO (city, zipcode) VALUES ('undefined','');
+
 
 

@@ -1,6 +1,9 @@
 package dtos;
 
+import entities.Address;
+import entities.Hobby;
 import entities.Person;
+import entities.Phone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +14,17 @@ public class PersonDTO {
     private String email;
     private String firstName;
     private String lastName;
+    private List<HobbyDTO> hobbies;
+    private AddressDTO address;
+    private List<PhoneDTO> phones;
 
-    public PersonDTO(String email, String firstName, String lastName) {
+    public PersonDTO(String email, String firstName, String lastName, List<Hobby> hobbies, Address address, List<Phone> phones) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.hobbies = HobbyDTO.getDTOs(hobbies);
+        this.address = new AddressDTO(address);
+        this.phones = PhoneDTO.getDTOs(phones);
     }
 
     public PersonDTO(Person p) {
@@ -23,6 +32,8 @@ public class PersonDTO {
         this.email = p.getEmail();
         this.firstName = p.getFirstName();
         this.lastName = p.getLastName();
+        this.hobbies = HobbyDTO.getDTOs(p.getHobbies());
+        this.address = new AddressDTO(p.getAddress());
     }
 
     public static List<PersonDTO> getDTOs(List<Person> persons){
