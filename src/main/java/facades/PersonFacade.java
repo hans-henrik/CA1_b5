@@ -95,6 +95,22 @@ public class PersonFacade {
         }
         return person;
     }
+     
+        public PersonDTO createPersonDTO(PersonDTO person)throws WebApplicationException {
+        EntityManager em = emf.createEntityManager();
+        Person p = new Person(person.getEmail(), person.getFirstName(),person.getLastName());
+        try {
+            em.getTransaction().begin();
+            if (person == null) {
+                throw new WebApplicationException("Id does not exist");
+            }
+            em.persist(p);     
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new PersonDTO(p);
+    }
     
      //TODO update errorhandling
      
