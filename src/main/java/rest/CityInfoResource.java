@@ -21,8 +21,8 @@ public class CityInfoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String greet(){
-        String str = "Welcome to the City Info API!";
-        return GSON.toJson(str);
+
+        return "{\"msg\":\"Welcome to CityInfo API!\"}";
     }
 
     @Path("/{zip}")
