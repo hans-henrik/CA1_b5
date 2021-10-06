@@ -53,7 +53,7 @@ public class PersonResource {
     @Produces({MediaType.APPLICATION_JSON})
     public String editPersonDTO(String person){
         PersonDTO pDTO = GSON.fromJson(person,PersonDTO.class);
-                pDTO= FACADE.editPersonDTO(pDTO);
+               pDTO= FACADE.editPersonDTO(pDTO);
         return GSON.toJson(pDTO);   
     }
     
