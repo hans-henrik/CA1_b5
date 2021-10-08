@@ -5,6 +5,7 @@
  */
 package facades;
 
+import dtos.HobbyDTO;
 import dtos.PersonDTO;
 import entities.Person;
 import entities.Hobby;
@@ -51,7 +52,14 @@ public class HobbyFacade {
         } finally {
             em.close();
         }
-
+    }
+    
+    public List<HobbyDTO> getAllHobbies() {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Hobby> query = em.createQuery("SELECT h FROM Hobby h", Hobby.class);
+        List<Hobby> hobby = query.getResultList();
+        hobby.forEach(h -> System.out.println(h));
+        return HobbyDTO.getDTOs(hobby);
     }
 
     public long countPeopleByHobby(String hobbyName) throws WebApplicationException {

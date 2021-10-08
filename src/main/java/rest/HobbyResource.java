@@ -7,6 +7,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dtos.HobbyDTO;
 import dtos.PersonDTO;
 import entities.Hobby;
 import facades.HobbyFacade;
@@ -30,6 +31,14 @@ public class HobbyResource {
     @Produces({MediaType.APPLICATION_JSON})
     public String greet(){
         return "\"msg\": Welcome to the Hobby API homepage!";
+    }
+    
+    @Path("show")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String showHobbies() {
+        List<HobbyDTO> hdto = FACADE.getAllHobbies();
+        return GSON.toJson(hdto);
     }
 
     @Path("/{hobbyName}")

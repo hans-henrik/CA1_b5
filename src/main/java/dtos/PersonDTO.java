@@ -38,6 +38,10 @@ public class PersonDTO {
         }
     }
 
+    public List<HobbyDTO> getHobbies() {
+        return hobbies;
+    }
+    
     public Long getId() {
         return id;
     }
